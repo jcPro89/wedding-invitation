@@ -433,16 +433,7 @@
       <a class="btn" href="https://maps.app.goo.gl/5YUoKQYc1FKj5P4w5" target="_blank" rel="noopener">Cómo llegar</a>
     </div>
 
-    <div class="event-card reveal">
-      <svg class="event-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 21 L4 11 L12 3 L20 11 L20 21 Z"/><path d="M9 21 V15 H15 V21"/></svg>
-      <h3>Fiesta</h3>
-      <p>
-        4 de Septiembre · 20:30 hs<br>
-        Diamantis Plaza<br>
-        Fco. Solano López 1482
-      </p>
-      <a class="btn" href="https://maps.app.goo.gl/L1gvjoPcABL5cgs59" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
+    <div id="fiesta-slot"></div>
   </section>
 
   <!-- GALLERY -->
@@ -566,6 +557,23 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => observer.observe(el));
+
+  // Acceso a info de fiesta según pase en la URL (?pase=...)
+  // Pase "solo ceremonia": no agrega nada.
+  // Pase "ceremonia + fiesta": carga la tarjeta Fiesta desde un archivo aparte.
+  const PASE_FIESTA = 'KcNr4zF1yJ';
+  const params = new URLSearchParams(window.location.search);
+  const pase = params.get('pase');
+
+  if (pase === PASE_FIESTA) {
+    fetch('fiesta-content.html')
+      .then(res => res.ok ? res.text() : Promise.reject())
+      .then(html => {
+        const slot = document.getElementById('fiesta-slot');
+        if (slot) slot.outerHTML = html;
+      })
+      .catch(() => {});
+  }
 </script>
 
 </body>
