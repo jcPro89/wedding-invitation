@@ -485,7 +485,7 @@
     <div class="eyebrow">Confirmación</div>
     <h2 style="margin-bottom:18px; font-size:26px;">¿Nos acompañás?</h2>
     <p>Te esperamos para celebrar este día junto a las personas que más queremos. Por favor confirmá tu asistencia antes del 15 de Agosto.</p>
-    <a class="btn-main" href="https://forms.gle/r1Z3iw4Si6u6PVpq9" target="_blank" rel="noopener">Confirmar asistencia</a>
+    <a class="btn-main" id="rsvp-btn" href="https://forms.gle/9DqvdRqfEDy9LWC37" target="_blank" rel="noopener">Confirmar asistencia</a>
   </section>
 
   <!-- INFO -->
@@ -559,9 +559,10 @@
   revealEls.forEach(el => observer.observe(el));
 
   // Acceso a info de fiesta según pase en la URL (?pase=...)
-  // Pase "solo ceremonia": no agrega nada.
-  // Pase "ceremonia + fiesta": carga la tarjeta Fiesta desde un archivo aparte.
+  // Pase "solo ceremonia": no agrega nada, formulario de RSVP queda el de ceremonia.
+  // Pase "ceremonia + fiesta": carga la tarjeta Fiesta y cambia el formulario de RSVP.
   const PASE_FIESTA = 'KcNr4zF1yJ';
+  const FORM_FIESTA = 'https://forms.gle/r1Z3iw4Si6u6PVpq9';
   const params = new URLSearchParams(window.location.search);
   const pase = params.get('pase');
 
@@ -573,6 +574,9 @@
         if (slot) slot.outerHTML = html;
       })
       .catch(() => {});
+
+    const rsvpBtn = document.getElementById('rsvp-btn');
+    if (rsvpBtn) rsvpBtn.href = FORM_FIESTA;
   }
 </script>
 
