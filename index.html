@@ -123,10 +123,14 @@
     overflow:hidden;
     background:var(--black);
   }
+  .hero{
+    aspect-ratio:1/1; /* mismo alto que el hero cuadrado anterior */
+  }
   .hero__image{
     display:block;
     width:100%;
-    height:auto;
+    height:100%;
+    object-fit:cover; /* conserva la relación de aspecto; recorta los laterales */
   }
 
   /* ---------- intro line ---------- */
@@ -392,7 +396,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <img class="hero__image" src="Hero.png" alt="Daniel y Catherine">
+    <img class="hero__image" src="Hero.webp" alt="Andrea y Jonathan">
   </section>
 
   <!-- INTRO -->
