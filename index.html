@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Cathe & Danu — 14 de Noviembre</title>
+<meta property="og:title" content="Daniel & Catherine — 3 de Septiembre">
+<meta property="og:description" content="¡Nos casamos! Acompañanos en nuestra boda.">
+<meta property="og:image" content="https://jcpro89.github.io/wedding-invitation/preview.png">
+<meta property="og:url" content="https://jcpro89.github.io/wedding-invitation/">
+<meta property="og:type" content="website">
+<title>Cathe & Danu</title>
 <meta name="description" content="Invitación digital de boda">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -433,16 +438,7 @@
       <a class="btn" href="https://maps.app.goo.gl/5YUoKQYc1FKj5P4w5" target="_blank" rel="noopener">Cómo llegar</a>
     </div>
 
-    <div class="event-card reveal">
-      <svg class="event-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 21 L4 11 L12 3 L20 11 L20 21 Z"/><path d="M9 21 V15 H15 V21"/></svg>
-      <h3>Fiesta</h3>
-      <p>
-        4 de Septiembre · 20:30 hs<br>
-        Diamantis Plaza<br>
-        Fco. Solano López 1482
-      </p>
-      <a class="btn" href="https://maps.app.goo.gl/L1gvjoPcABL5cgs59" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
+    <div id="fiesta-slot"></div>
   </section>
 
   <!-- GALLERY -->
@@ -494,7 +490,7 @@
     <div class="eyebrow">Confirmación</div>
     <h2 style="margin-bottom:18px; font-size:26px;">¿Nos acompañás?</h2>
     <p>Te esperamos para celebrar este día junto a las personas que más queremos. Por favor confirmá tu asistencia antes del 15 de Agosto.</p>
-    <a class="btn-main" href="https://forms.gle/r1Z3iw4Si6u6PVpq9" target="_blank" rel="noopener">Confirmar asistencia</a>
+    <a class="btn-main" id="rsvp-btn" href="https://forms.gle/9DqvdRqfEDy9LWC37" target="_blank" rel="noopener">Confirmar asistencia</a>
   </section>
 
   <!-- INFO -->
@@ -566,6 +562,27 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => observer.observe(el));
+
+  // Acceso a info de fiesta según pase en la URL (?pase=...)
+  // Pase "solo ceremonia": no agrega nada, formulario de RSVP queda el de ceremonia.
+  // Pase "ceremonia + fiesta": carga la tarjeta Fiesta y cambia el formulario de RSVP.
+  const PASE_FIESTA = 'KcNr4zF1yJ';
+  const FORM_FIESTA = 'https://forms.gle/r1Z3iw4Si6u6PVpq9';
+  const params = new URLSearchParams(window.location.search);
+  const pase = params.get('pase');
+
+  if (pase === PASE_FIESTA) {
+    fetch('fiesta-content.html')
+      .then(res => res.ok ? res.text() : Promise.reject())
+      .then(html => {
+        const slot = document.getElementById('fiesta-slot');
+        if (slot) slot.outerHTML = html;
+      })
+      .catch(() => {});
+
+    const rsvpBtn = document.getElementById('rsvp-btn');
+    if (rsvpBtn) rsvpBtn.href = FORM_FIESTA;
+  }
 </script>
 
 </body>
